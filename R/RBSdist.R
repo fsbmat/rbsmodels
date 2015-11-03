@@ -4,7 +4,7 @@
 # manoel.ferreira@ufcg.edu.br
 # ---------------------------------------------------------------------------------------
 
-Birnbaum.Saunders = BS = function (mu.link = "identity" , sigma.link="identity")
+Birnbaum.Saunders <- BS <- function (mu.link = "identity" , sigma.link="identity")
 {
   mstats = checklink("mu.link", "BS", substitute(mu.link),c("sqrt","log","identity"))
   dstats = checklink("sigma.link", "BS", substitute(sigma.link),c("sqrt", "log", "identity"))
