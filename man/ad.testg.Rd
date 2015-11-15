@@ -10,7 +10,7 @@ cvm.testg(x,cdf)
 \arguments{
 \item{x}{a numeric vector of data values, the number of which must be greater than 7. Missing values are allowed.}
 
-\item{cdf}{cumlative distribution function.}
+\item{cdf}{cumulative distribution function.}
 }
 \value{
 A list with class "htest" containing the following components:
