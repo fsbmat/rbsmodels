@@ -1,17 +1,36 @@
 #' Residuals
 #'
 #'@description \code{residuals} is a function which extracts model residuals from objects returned by modeling functions.
-#'@usage residuals(model,residual = "deviation")
+#'@usage residuals(model,residual = "deviance")
 #'
 #' @param model an object for which the extraction of model residuals is meaningful.
 #' @param residual type of residual to be used.
 #'
 #'@return Residuals extracted from the object object.
 #'
+#'@author
+#'Manoel Santos-Neto \url{manoel.ferreira@ufcg.edu.br}, F.J.A. Cysneiros \url{cysneiros@de.ufpe.br}, Victor Leiva \url{victorleivasanchez@gmail.com} and Michelli Barros \url{michelli.karinne@gmail.com}
+#'
+#'@examples
+#'##
+#'library(alr3)
+#'data(landrent)
+#'attach(landrent)
+#'resp <- I(Y/X1)
+#'y1 <-  split(resp, X4)$"1"
+#'x21 <-  split(X2, X4)$"1"
+#'
+#'##Fixed Precision
+#'fit0 <- gamlss(y1 ~ x21, family=RBS(mu.link="identity"),method=CG()  )
+#'plot(fitted(fit0),residuals(fit0),xlab="fitted values",ylab="Deviance")
+#'##Varying Precision
+#'fit1 <- gamlss(y1 ~ x21,sigma.formula = y1 ~x21, family=RBS(mu.link="identity",sigma.link="sqrt"),method=CG()  )
+#'plot(fitted(fit1),residuals(fit1),xlab="fitted values",ylab="Deviance")
+#'
 #'@export
 
 
-residuals <- function(model,residual = "deviation")
+residuals <- function(model,residual = "deviance")
 {
 
   rP <- function(fit)
@@ -66,7 +85,7 @@ residuals <- function(model,residual = "deviation")
     mu.hat <- fit$mu.fv
     sigma.hat <- fit$sigma.fv
     y <- model$y
-    F <- pBS(y,mu=mu.hat,sigma=sigma.hat)
+    F <- pRBS(y,mu=mu.hat,sigma=sigma.hat)
     res <- qnorm(F)
     return(res)
   }
@@ -74,7 +93,7 @@ residuals <- function(model,residual = "deviation")
   output <- switch(residual,
                    "pearson" = rP(model),
                    "score" = rS(model),
-                   "deviation" = rD(model),
+                   "deviance" = rD(model),
                    "quantile" = rQ(model))
   return(output)
 }
