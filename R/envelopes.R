@@ -118,7 +118,7 @@ envelope <- function(model,k=19,alpha=0.05,res="deviance", precision = c("fixed"
   par(new=TRUE)
   qqnorm(xb,axes=F,xlab="",ylab="",main="",type="l",ylim=faixa,lty=2,lwd=1,col="black")
   par(new=TRUE)
-  qqnorm(td,xlab="N(0,1) quantile",main="",ylab="Residuals",ylim=faixa,pch=20,cex=1,lwd=1)
+  qqnorm(td,xlab="Theorical Quantile",main="",ylab="Empirical Quantile",ylim=faixa,pch=20,cex=1,lwd=1)
   } else{
     alfa1 <- ceiling(k*alpha)
     alfa2 <- ceiling(k*(1-alpha))
@@ -178,7 +178,7 @@ envelope <- function(model,k=19,alpha=0.05,res="deviance", precision = c("fixed"
     par(new=TRUE)
     qqnorm(xb,axes=F,xlab="",ylab="",main="",type="l",ylim=faixa,lty=2,lwd=1,col="black")
     par(new=TRUE)
-    qqnorm(td,xlab="N(0,1) quantile",main="",ylab="Residuals",ylim=faixa,pch=20,cex=1,lwd=1)
+    qqnorm(td,xlab="Theorical Quantile",main="",ylab="Empirical Quantile",ylim=faixa,pch=20,cex=1,lwd=1)
     }
   }
 

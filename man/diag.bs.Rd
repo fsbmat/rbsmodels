@@ -4,25 +4,31 @@
 \alias{diag.bs}
 \title{Diagnostic Analysis - Local Influnce}
 \usage{
-envelope(model,k=19,alpha=0.05,res="deviance", precision = "fixed")
+diag.bs(model)
 }
 \arguments{
 \item{model}{object of class \code{gamlss} holding the fitted model.}
-
-\item{k}{number of replications for envelope construction. Default is 19.}
-
-\item{alpha}{value giving the size of the envelope. Default is 0.05 which is equivalent to a 95\% band.}
-
-\item{res}{type of residuals to be extracted. Default is deviance.}
-
-\item{precision}{If \code{precision = "fixed"} a model with precision fixed is used;
-else a model with precision variable is used.}
 }
 \value{
-A simulated envelope of the class RBS.
+Local influence measures.
 }
 \description{
 Diagnostics for the RBS model
+}
+\examples{
+library(faraway)
+data(cpd)
+attach(cpd)
+fit = gamlss(actual ~ 0+projected, family=RBS(mu.link="identity"),method=CG())
+summary(fit)
+set.seed(2015)
+envelope(fit)
+Cib <- diag.bs(fit)$Ci.beta
+plot(Cib,ylim=c(0,1),pch=19)
+abline(h=2*mean(Cib),type=2)
+Cia <- diag.bs(fit)$Ci.alpha
+plot(Cia,ylim=c(0,1),pch=19)
+abline(h=2*mean(Cia),type=2)
 }
 \author{
 Manoel Santos-Neto \email{manoel.ferreira@ufcg.edu.br}, F.J.A. Cysneiros \email{cysneiros@de.ufpe.br}, Victor Leiva \email{victorleivasanchez@gmail.com} and Michelli Barros \email{michelli.karinne@gmail.com}
