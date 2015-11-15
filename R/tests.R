@@ -379,3 +379,102 @@ score.test=function(modelH0,modelH1)
   return(RVAL)
 }
 
+
+#'Goodness of Fit Tests
+#'
+#'@description Performs the Anderson-Darlin and Cramer-von Mises tests
+#'
+#'@usage ad.testg(x,cdf)
+#'cvm.testg(x,cdf)
+#'
+#'
+#' @param x a numeric vector of data values, the number of which must be greater than 7. Missing values are allowed.
+#' @param cdf cumlative distribution function.
+#'
+#' @return A list with class "htest" containing the following components:
+#' @return \code{statistic}	the value of the test statistic.
+#' @return \code{p.value}	the p-value for the test.
+#' @return \code{method}	a character string indicating what type of likelihood ratio test was performed.
+#' @return \code{data.name} a character string giving the name(s) of the data
+#'
+#'@author
+#'Manoel Santos-Neto
+#'
+#'@references
+#'Stephens, M.A. (1986): Tests based on EDF statistics. In: D'Agostino, R.B. and Stephens, M.A., eds.: Goodness-of-Fit Techniques. Marcel Dekker, New York.
+#'
+#'Thode Jr., H.C. (2002): Testing for Normality. Marcel Dekker, New York.
+#'
+#'@examples
+#'x<- rRBS(1000)
+#'fit <- gamlss(x1~1,family=BS(),method=CG())
+#'mu<- fit$mu.coefficients ; mu
+#' sigma <- fit$sigma.coefficients ; sigma
+#' cdf <- function(x) pBS(x,mu,sigma)
+#' ad.testg(x,cdf)
+#' cvm.testg(x,cdf)
+#'@export
+ad.testg = function(x,cdf)
+{
+  DNAME <- deparse(substitute(x))
+  x <- sort(x[complete.cases(x)])
+  u <- sapply(x,cdf)
+  y <- qnorm(u)
+  test <- ad.test(y)
+  stat <- test$statistic
+  pval<-test$p.value
+  RVAL <- list(statistic = stat, p.value = pval, method = "Anderson-Darling test for F distribution",
+               data.name = DNAME)
+  class(RVAL) <- "htest"
+  return(RVAL)
+}
+
+#'Goodness of Fit Tests
+#'
+#'@description Performs the Anderson-Darlin and Cramer-von Mises tests
+#'
+#'@usage ad.testg(x,cdf)
+#'cvm.testg(x,cdf)
+#'
+#'
+#' @param x a numeric vector of data values, the number of which must be greater than 7. Missing values are allowed.
+#' @param cdf cumlative distribution function.
+#'
+#' @return A list with class "htest" containing the following components:
+#' @return \code{statistic}	the value of the test statistic.
+#' @return \code{p.value}	the p-value for the test.
+#' @return \code{method}	a character string indicating what type of likelihood ratio test was performed.
+#' @return \code{data.name} a character string giving the name(s) of the data
+#'
+#'@author
+#'Manoel Santos-Neto
+#'
+#'@references
+#'Stephens, M.A. (1986): Tests based on EDF statistics. In: D'Agostino, R.B. and Stephens, M.A., eds.: Goodness-of-Fit Techniques. Marcel Dekker, New York.
+#'
+#'Thode Jr., H.C. (2002): Testing for Normality. Marcel Dekker, New York.
+#'
+#'@examples
+#'x<- rRBS(1000)
+#'fit <- gamlss(x~1,family=RBS(),method=CG())
+#'mu<- fit$mu.coefficients ; mu
+#'sigma <- fit$sigma.coefficients ; sigma
+#' cdf <- function(x) pRBS(x,mu,sigma)
+#' ad.testg(x,cdf)
+#' cvm.testg(x,cdf)
+#'@export
+
+cvm.testg = function(x,cdf)
+{
+  DNAME <- deparse(substitute(x))
+  x <- sort(x[complete.cases(x)])
+  u <- sapply(x,cdf)
+  y <- qnorm(u)
+  test <- cvm.test(y)
+  stat <- test$statistic
+  pval<-test$p.value
+  RVAL <- list(statistic = stat, p.value = pval, method = "Cramer-von Mises test for F distribution",
+               data.name = DNAME)
+  class(RVAL) <- "htest"
+  return(RVAL)
+}

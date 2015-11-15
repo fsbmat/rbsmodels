@@ -23,10 +23,10 @@
 #'envelope(fit)
 #'Cib <- diag.bs(fit)$Ci.beta
 #'plot(Cib,ylim=c(0,1),pch=19)
-#'abline(h=2*mean(Cib),type=2)
+#'abline(h=2*mean(Cib),lty=2)
 #'Cia <- diag.bs(fit)$Ci.alpha
 #'plot(Cia,ylim=c(0,1),pch=19)
-#'abline(h=2*mean(Cia),type=2)
+#'abline(h=2*mean(Cia),lty=2)
 #'@export
 
 diag.bs=function(model,mu.link = "identity",sigma.link = "identity")

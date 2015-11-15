@@ -35,9 +35,11 @@ data(cpd)
 attach(cpd)
 model0 = gamlss(actual ~ projected, family=RBS(mu.link="identity"),method=CG())
 summary(model0)
+set.seed(2015)
 envelope(model0)
 model = gamlss(actual ~ 0+projected, family=RBS(mu.link="identity"),method=CG())
 summary(model)
+set.seed(2015)
 envelope(model)
 
 ##
@@ -51,10 +53,12 @@ x21 <-  split(X2, X4)$"1"
 ##Fixed Precision
 fit0 <- gamlss(y1 ~ x21, family=RBS(mu.link="identity"),method=CG()  )
 summary(fit0)
+set.seed(2015)
 envelope(fit0,alpha=0.01, precision="fixed",res="quantile",dist=RBS(mu.link="identity"))
 ##Varying Precision
 fit1 <- gamlss(y1 ~ x21,sigma.formula = y1 ~x21, family=RBS(mu.link="identity",sigma.link="sqrt"),method=CG()  )
 summary(fit11)
+set.seed(2015)
 envelope(fit1,alpha=0.01, precision="varying",res="quantile",dist=RBS(mu.link="identity",sigma.link="sqrt"))
 }
 \author{
