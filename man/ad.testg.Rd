@@ -28,10 +28,10 @@ Performs the Anderson-Darlin and Cramer-von Mises tests
 }
 \examples{
 x<- rRBS(1000)
-fit <- gamlss(x1~1,family=BS(),method=CG())
+fit <- gamlss(x~1,family=RBS(),method=CG())
 mu<- fit$mu.coefficients ; mu
 sigma <- fit$sigma.coefficients ; sigma
-cdf <- function(x) pBS(x,mu,sigma)
+cdf <- function(x) pRBS(x,mu,sigma)
 ad.testg(x,cdf)
 cvm.testg(x,cdf)
 }
